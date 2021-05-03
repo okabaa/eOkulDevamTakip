@@ -22,7 +22,11 @@ Route::middleware(['auth', 'verified'])->get('/panel', function () {
 })->name('dashboard');
 
 
-Route::group(['middleware' => ['auth', 'isAdmin'], 'prefix' => 'yonetici'], function () {
+Route::group([
+    'middleware' => ['auth', 'isAdmin'],
+    'namespace' => '\App\Http\Controllers'
+], function () {
+    Route::resource('sinif', SinifController::class);
     Route::get('deneme', function () {
         return "middleware testi";
     });
