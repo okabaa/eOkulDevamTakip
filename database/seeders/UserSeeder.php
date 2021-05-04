@@ -19,16 +19,16 @@ class UserSeeder extends Seeder
             'name' => 'Oğuzhan KABA',
             'email' => 'yonetici@devamtakim.com',
             'email_verified_at' => now(),
-            'type' => 'admin',
+            'role' => 'admin',
             'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
             'remember_token' => Str::random(10),
         ]);
 
         User::factory(10)->create([
-            'type' => 'teacher'
+            'role' => 'teacher'
         ]);
         User::factory(50)->create([
-            'type' => 'student'
+            'role' => 'student'
         ]);
     }
 }

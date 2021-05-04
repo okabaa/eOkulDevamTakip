@@ -14,7 +14,7 @@ class AddSinifColumnsToUsersTable extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->foreignId('sinif_id')->nullable()->after('type')->constrained();
+            $table->foreignId('sinif_id')->nullable()->after('role')->constrained();
         });
     }
 

@@ -22,8 +22,8 @@ class SinifFactory extends Factory
     public function definition()
     {
         return [
-            'ad' => $this->faker->unique()->regexify('([1-9]{1}|1[0-2]{1})\/[A-F]{1} Sınıfı'),
-            'aciklama' => $this->faker->text(50)
+            'name' => $this->faker->unique()->regexify('([1-9]{1}|1[0-2]{1})\/[A-F]{1} Sınıfı'),
+            'description' => $this->faker->text(50)
         ];
     }
 }

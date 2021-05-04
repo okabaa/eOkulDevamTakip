@@ -25,7 +25,7 @@ class SinifController extends Controller
      */
     public function create()
     {
-        return 'create sayfafası';
+        return view('sinif.create');
     }
 
     /**
@@ -36,7 +36,7 @@ class SinifController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        return $request->post();
     }
 
     /**

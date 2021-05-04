@@ -15,8 +15,8 @@ class CreateSinifsTable extends Migration
     {
         Schema::create('sinifs', function (Blueprint $table) {
             $table->id();
-            $table->string('ad',150)->comment('Sınıf adı');
-            $table->string('aciklama', 500)->nullable()->comment('Sınıf açıklaması');
+            $table->string('name',150)->comment('Sınıf adı');
+            $table->string('description', 500)->nullable()->comment('Sınıf açıklaması');
             $table->timestamps();
         });
     }
