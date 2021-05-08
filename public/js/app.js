@@ -3802,11 +3802,11 @@ module.exports = {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js");
 /* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(jquery__WEBPACK_IMPORTED_MODULE_0__);
+__webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js");
+
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
 __webpack_require__(/*! alpinejs */ "./node_modules/alpinejs/dist/alpine.js");
-
-__webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js");
 
 
 window.jQuery = (jquery__WEBPACK_IMPORTED_MODULE_0___default());

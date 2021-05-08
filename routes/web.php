@@ -26,6 +26,7 @@ Route::group([
     'middleware' => ['auth', 'isAdmin'],
     'namespace' => '\App\Http\Controllers'
 ], function () {
+    Route::get('sinif/{id}',[\App\Http\Controllers\SinifController::class,'destroy'])->whereNumber('id')->name('sinif.destroy');
     Route::resource('sinif', SinifController::class);
     Route::get('deneme', function () {
         return "middleware testi";

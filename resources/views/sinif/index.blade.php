@@ -12,14 +12,14 @@
                         <div class="card">
                             <div class="card-body">
                                 <div class="d-flex w-100 justify-content-between">
-                                    <h5 class="card-title">{{$sinif->ad}}</h5>
+                                    <h5 class="card-title">{{$sinif->name}}</h5>
                                     <span>
                                         <a href="#" class="btn btn-sm btn-success"><i class="fa fa-user-plus"></i></a>
-                                        <a href="#" class="btn btn-sm btn-primary"><i class="fa fa-pen"></i></a>
-                                        <a href="#" class="btn btn-sm btn-danger"><i class="fa fa-times"></i></a>
+                                        <a href="{{route('sinif.edit',$sinif->id)}}" class="btn btn-sm btn-primary"><i class="fa fa-pen"></i></a>
+                                        <a href="{{route('sinif.destroy',$sinif->id)}}" class="btn btn-sm btn-danger"><i class="fa fa-times"></i></a>
                                     </span>
                                 </div>
-                                <p class="card-text">{{$sinif->aciklama}}</p>
+                                <p class="card-text">{{$sinif->description}}</p>
                                 <p class="card-text"><small class="text-muted">Sınıfta kayıtlı {{$sinif->id}} öğrenci
                                         bulunmaktadır.</small></p>
                             </div>
