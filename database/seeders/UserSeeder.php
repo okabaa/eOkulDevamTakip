@@ -27,8 +27,5 @@ class UserSeeder extends Seeder
         User::factory(10)->create([
             'role' => 'teacher'
         ]);
-        User::factory(50)->create([
-            'role' => 'student'
-        ]);
     }
 }
