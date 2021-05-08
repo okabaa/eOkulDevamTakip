@@ -14,6 +14,7 @@
                                 <div class="d-flex w-100 justify-content-between">
                                     <h5 class="card-title">{{$sinif->name}}</h5>
                                     <span>
+                                        <a href="#" class="btn btn-sm btn-warning"><i class="fa fa-users"></i></a>
                                         <a href="#" class="btn btn-sm btn-success"><i class="fa fa-user-plus"></i></a>
                                         <a href="{{route('sinif.edit',$sinif->id)}}" class="btn btn-sm btn-primary"><i class="fa fa-pen"></i></a>
                                         <a href="{{route('sinif.destroy',$sinif->id)}}" class="btn btn-sm btn-danger"><i class="fa fa-times"></i></a>

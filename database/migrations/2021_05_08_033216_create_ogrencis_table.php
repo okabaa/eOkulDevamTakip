@@ -15,8 +15,8 @@ class CreateOgrencisTable extends Migration
     {
         Schema::create('ogrencis', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('parent_name');
+            $table->string('name',150);
+            $table->string('parent_name',150);
             $table->string('email');
             $table->text('profile_photo_path')->nullable();
             $table->timestamps();

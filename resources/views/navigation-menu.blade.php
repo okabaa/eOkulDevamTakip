@@ -20,6 +20,11 @@
                             {{ __('Sınıflar') }}
                         </x-jet-nav-link>
                     @endcan
+                    @can('isAdmin',Auth::user())
+                        <x-jet-nav-link href="{{ route('ogrenci.index') }}" :active="request()->routeIs('ogrenci.index')">
+                            {{ __('Öğrenciler') }}
+                        </x-jet-nav-link>
+                    @endcan
                 </div>
             </div>
 
@@ -165,6 +170,12 @@
                 <x-jet-responsive-nav-link href="{{ route('sinif.index') }}"
                                            :active="request()->routeIs('sinif.index')">
                     {{ __('Sınıflar') }}
+                </x-jet-responsive-nav-link>
+            @endcan
+            @can('isAdmin',Auth::user())
+                <x-jet-responsive-nav-link href="{{ route('ogrenci.index') }}"
+                                           :active="request()->routeIs('ogrenci.index')">
+                    {{ __('Öğrenciler') }}
                 </x-jet-responsive-nav-link>
             @endcan
         </div>
