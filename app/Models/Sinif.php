@@ -10,4 +10,9 @@ class Sinif extends Model
     use HasFactory;
 
     protected $fillable = ['name', 'aciklama'];
+
+    public function ogrenciler()
+    {
+        return $this->hasMany(Ogrenci::class);
+    }
 }

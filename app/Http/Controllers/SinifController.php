@@ -16,7 +16,7 @@ class SinifController extends Controller
      */
     public function index()
     {
-        $siniflar = Sinif::paginate(6);
+        $siniflar = Sinif::withCount('ogrenciler')->paginate(6);
         return view('sinif.index', compact('siniflar'));
     }
 
