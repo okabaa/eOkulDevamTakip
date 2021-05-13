@@ -13,6 +13,6 @@ class Ogrenci extends Model
 
     public function sinif()
     {
-        $this->belongsTo(Sinif::class);
+        return $this->belongsTo(Sinif::class);
     }
 }

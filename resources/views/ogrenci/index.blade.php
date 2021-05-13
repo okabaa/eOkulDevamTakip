@@ -6,6 +6,8 @@
                 <a href="{{route('ogrenci.create')}}" class="btn btn-sm btn-primary"><i class="fa fa-plus"></i> Öğrenci
                     Kaydet</a>
             </h5>
+            {{$ogrenciler->links()}}
+            <hr>
             <div class="row row-cols-1 row-cols-md-2">
                 @foreach($ogrenciler as $ogrenci)
                     <div class="col mb-4">
@@ -21,16 +23,16 @@
                                         <div class="d-flex w-auto justify-content-between">
                                             <h5 class="card-title"></h5>
                                             <span>
-                                                 <a href="{{route('sinif.edit',$ogrenci->id)}}"
+                                                 <a href="{{route('ogrenci.edit',$ogrenci->id)}}"
                                                     class="btn btn-sm btn-primary"><i class="fa fa-pen"></i></a>
-                                                 <a href="{{route('sinif.destroy',$ogrenci->id)}}"
+                                                 <a href="{{route('ogrenci.destroy',$ogrenci->id)}}"
                                                     class="btn btn-sm btn-danger"><i class="fa fa-times"></i></a>
                                             </span>
                                         </div>
                                         <h4 class="card-title">{{$ogrenci->name}}</h4>
-                                        <p class="card-text"><b>Velisiu:</b> {{$ogrenci->parent_name}}</p>
+                                        <p class="card-text"><b>Velisi:</b> {{$ogrenci->parent_name}}</p>
                                         <p class="card-text"><small class="text-muted">{{$ogrenci->email}} </small></p>
-                                        <p class="card-text"><small class="text-muted">Sınıf : </small></p>
+                                        <p class="card-text"><small class="text-muted">Sınıf : @isset($ogrenci->sinif->name) {{$ogrenci->sinif->name}} @endif</small></p>
 
                                     </div>
                                 </div>
@@ -39,8 +41,6 @@
                     </div>
                 @endforeach
             </div>
-            </table>
-            {{$ogrenciler->links()}}
         </div>
     </div>
 </x-app-layout>

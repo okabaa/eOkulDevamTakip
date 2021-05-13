@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\OgrenciCreateRequest;
+use App\Http\Requests\OgrenciUpdateRequest;
 use App\Models\Ogrenci;
 use App\Models\Sinif;
 use Illuminate\Http\Request;
@@ -42,7 +43,7 @@ class OgrenciController extends Controller
     public function store(OgrenciCreateRequest $request)
     {
         if($request->hasFile('profile_photo_path')){
-            $fileName = Str::slug($request->name.'-'.$request->parent_name).'.'.$request->profile_photo_path->extension();
+            $fileName = Str::slug($request->name.'-'.$request->parent_name).'-'.uniqid().'.'.$request->profile_photo_path->extension();
             $fileNameWithUpload = 'ogrenciler/'.$fileName;
             $request->profile_photo_path->move(public_path('ogrenciler'),$fileName);
             $request->merge([
@@ -70,9 +71,11 @@ class OgrenciController extends Controller
      * @param \App\Models\Ogrenci $ogrenci
      * @return \Illuminate\Http\Response
      */
-    public function edit(Ogrenci $ogrenci)
+    public function edit($id)
     {
-        //
+        $siniflar = Sinif::all()->sortBy('name');
+        $ogrenci = Ogrenci::find($id) ?? abort(404, 'Öğrenci Bulunamadı');
+        return view('ogrenci.edit',compact('ogrenci','siniflar'));
     }
 
     /**
@@ -82,9 +85,20 @@ class OgrenciController extends Controller
      * @param \App\Models\Ogrenci $ogrenci
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Ogrenci $ogrenci)
+    public function update(OgrenciUpdateRequest $request,$id)
     {
-        //
+        $ogrenci = Ogrenci::find($id) ?? abort(404, 'Öğrenci Bulunamadı');
+        if($request->hasFile('profile_photo_path')){
+            $fileName = Str::slug($request->name.'-'.$request->parent_name).'-'.uniqid().'.'.$request->profile_photo_path->extension();
+            $fileNameWithUpload = 'ogrenciler/'.$fileName;
+            $request->profile_photo_path->move(public_path('ogrenciler'),$fileName);
+            $request->merge([
+                'profile_photo_path'=>$fileNameWithUpload
+            ]);
+        }
+
+        Ogrenci::whereId($id)->first()->update($request->post());
+        return redirect()->route('ogrenci.index')->withSuccess('Öğrenci güncelleme işlemi başarıyla gerçekleşti');
     }
 
     /**
@@ -93,8 +107,10 @@ class OgrenciController extends Controller
      * @param \App\Models\Ogrenci $ogrenci
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Ogrenci $ogrenci)
+    public function destroy($id)
     {
-        //
+        $ogrenci = Ogrenci::find($id) ?? abort(404,'Öğrenci Bulunamadı');
+        $ogrenci->delete();
+        return redirect()->route('ogrenci.index')->withSuccess('Öğrenci silme işlemi başarıyla gerçekleşti');
     }
 }

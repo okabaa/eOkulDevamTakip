@@ -75,9 +75,7 @@ class SinifController extends Controller
     public function update(SinifUpdateRequest $request, $id)
     {
         $sinif = Sinif::find($id) ?? abort(404, 'Sınıf Bulunamadı');
-
         Sinif::where('id',$id)->update($request->except(['_method','_token']));
-
         return redirect()->route('sinif.index')->withSuccess('Sınıf güncelleme işlemi başarıyla gerçekleşti');
     }
 
