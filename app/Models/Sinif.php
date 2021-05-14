@@ -9,7 +9,7 @@ class Sinif extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'aciklama'];
+    protected $fillable = ['name', 'description'];
 
     public function ogrenciler()
     {

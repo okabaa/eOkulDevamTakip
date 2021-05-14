@@ -2,10 +2,24 @@
     <x-slot name="header">Sınıflar</x-slot>
     <div class="card">
         <div class="card-body">
-            <h5 class="card-title">
+            <h5 class="card-title float-right">
                 <a href="{{route('sinif.create')}}" class="btn btn-sm btn-primary"><i class="fa fa-plus"></i> Sınıf
                     Oluştur</a>
             </h5>
+            <form method="GET" action="">
+                <div class="form-row">
+                    <div class="col-md-4">
+                        <input type="text" name="ara" value="{{request()->get('ara')}}" placeholder="Arama..."
+                               class="form-control">
+                    </div>
+                    @if(request()->get('ara'))
+                        <div class="col-md-2">
+                            <a href=" {{route('sinif.index')}} " class="btn btn-secondary">Sıfırla</a>
+                        </div>
+                    @endif
+                </div>
+            </form>
+            <hr>
             <div class="card-columns">
                 @foreach($siniflar as $sinif)
                     <tr>
@@ -29,7 +43,7 @@
                 @endforeach
             </div>
             </table>
-            {{$siniflar->links()}}
+            {{$siniflar->withQueryString()->links()}}
         </div>
     </div>
 </x-app-layout>

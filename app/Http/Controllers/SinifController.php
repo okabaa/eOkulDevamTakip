@@ -16,7 +16,15 @@ class SinifController extends Controller
      */
     public function index()
     {
-        $siniflar = Sinif::withCount('ogrenciler')->paginate(6);
+        $siniflar = Sinif::withCount('ogrenciler');
+
+        if(request()->get('ara')){
+            $siniflar = $siniflar
+                        ->where('name','LIKE',"%".request()->get('ara')."%")
+                        ->orWhere('description','LIKE',"%".request()->get('ara')."%");
+        }
+
+        $siniflar = $siniflar->paginate(6);
         return view('sinif.index', compact('siniflar'));
     }
 

@@ -18,8 +18,14 @@ class OgrenciController extends Controller
      */
     public function index()
     {
+        if (request()->get('ara')) {
+            $ogrenciler = Ogrenci::where('name', 'LIKE', "%" . request()->get('ara') . "%")
+                ->orWhere('parent_name', 'LIKE', "%" . request()->get('ara') . "%")
+                ->paginate(10);
+        } else {
 
-        $ogrenciler = Ogrenci::paginate(10);
+            $ogrenciler = Ogrenci::paginate(10);
+        }
         return view('ogrenci.index', compact('ogrenciler'));
     }
 
@@ -31,7 +37,7 @@ class OgrenciController extends Controller
     public function create()
     {
         $siniflar = Sinif::all()->sortBy('name');
-        return view('ogrenci.create',compact('siniflar'));
+        return view('ogrenci.create', compact('siniflar'));
     }
 
     /**
@@ -42,12 +48,12 @@ class OgrenciController extends Controller
      */
     public function store(OgrenciCreateRequest $request)
     {
-        if($request->hasFile('profile_photo_path')){
-            $fileName = Str::slug($request->name.'-'.$request->parent_name).'-'.uniqid().'.'.$request->profile_photo_path->extension();
-            $fileNameWithUpload = 'ogrenciler/'.$fileName;
-            $request->profile_photo_path->move(public_path('ogrenciler'),$fileName);
+        if ($request->hasFile('profile_photo_path')) {
+            $fileName = Str::slug($request->name . '-' . $request->parent_name) . '-' . uniqid() . '.' . $request->profile_photo_path->extension();
+            $fileNameWithUpload = 'ogrenciler/' . $fileName;
+            $request->profile_photo_path->move(public_path('ogrenciler'), $fileName);
             $request->merge([
-                'profile_photo_path'=>$fileNameWithUpload
+                'profile_photo_path' => $fileNameWithUpload
             ]);
         }
         Ogrenci::create($request->post());
@@ -75,7 +81,7 @@ class OgrenciController extends Controller
     {
         $siniflar = Sinif::all()->sortBy('name');
         $ogrenci = Ogrenci::find($id) ?? abort(404, 'Öğrenci Bulunamadı');
-        return view('ogrenci.edit',compact('ogrenci','siniflar'));
+        return view('ogrenci.edit', compact('ogrenci', 'siniflar'));
     }
 
     /**
@@ -85,15 +91,15 @@ class OgrenciController extends Controller
      * @param \App\Models\Ogrenci $ogrenci
      * @return \Illuminate\Http\Response
      */
-    public function update(OgrenciUpdateRequest $request,$id)
+    public function update(OgrenciUpdateRequest $request, $id)
     {
         $ogrenci = Ogrenci::find($id) ?? abort(404, 'Öğrenci Bulunamadı');
-        if($request->hasFile('profile_photo_path')){
-            $fileName = Str::slug($request->name.'-'.$request->parent_name).'-'.uniqid().'.'.$request->profile_photo_path->extension();
-            $fileNameWithUpload = 'ogrenciler/'.$fileName;
-            $request->profile_photo_path->move(public_path('ogrenciler'),$fileName);
+        if ($request->hasFile('profile_photo_path')) {
+            $fileName = Str::slug($request->name . '-' . $request->parent_name) . '-' . uniqid() . '.' . $request->profile_photo_path->extension();
+            $fileNameWithUpload = 'ogrenciler/' . $fileName;
+            $request->profile_photo_path->move(public_path('ogrenciler'), $fileName);
             $request->merge([
-                'profile_photo_path'=>$fileNameWithUpload
+                'profile_photo_path' => $fileNameWithUpload
             ]);
         }
 
@@ -109,7 +115,7 @@ class OgrenciController extends Controller
      */
     public function destroy($id)
     {
-        $ogrenci = Ogrenci::find($id) ?? abort(404,'Öğrenci Bulunamadı');
+        $ogrenci = Ogrenci::find($id) ?? abort(404, 'Öğrenci Bulunamadı');
         $ogrenci->delete();
         return redirect()->route('ogrenci.index')->withSuccess('Öğrenci silme işlemi başarıyla gerçekleşti');
     }

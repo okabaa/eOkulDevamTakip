@@ -2,11 +2,23 @@
     <x-slot name="header">Öğrenciler</x-slot>
     <div class="card">
         <div class="card-body">
-            <h5 class="card-title">
+            <h5 class="card-title float-right">
                 <a href="{{route('ogrenci.create')}}" class="btn btn-sm btn-primary"><i class="fa fa-plus"></i> Öğrenci
                     Kaydet</a>
             </h5>
-            {{$ogrenciler->links()}}
+            <form method="GET" action="">
+                <div class="form-row">
+                    <div class="col-md-4">
+                        <input type="text" name="ara" value="{{request()->get('ara')}}" placeholder="Arama..."
+                               class="form-control">
+                    </div>
+                    @if(request()->get('ara'))
+                        <div class="col-md-2">
+                            <a href=" {{route('ogrenci.index')}} " class="btn btn-secondary">Sıfırla</a>
+                        </div>
+                    @endif
+                </div>
+            </form>
             <hr>
             <div class="row row-cols-1 row-cols-md-2">
                 @foreach($ogrenciler as $ogrenci)
@@ -32,7 +44,9 @@
                                         <h4 class="card-title">{{$ogrenci->name}}</h4>
                                         <p class="card-text"><b>Velisi:</b> {{$ogrenci->parent_name}}</p>
                                         <p class="card-text"><small class="text-muted">{{$ogrenci->email}} </small></p>
-                                        <p class="card-text"><small class="text-muted">Sınıf : @isset($ogrenci->sinif->name) {{$ogrenci->sinif->name}} @endif</small></p>
+                                        <p class="card-text"><small class="text-muted">Sınıf
+                                                : @isset($ogrenci->sinif->name) {{$ogrenci->sinif->name}} @endif</small>
+                                        </p>
 
                                     </div>
                                 </div>
@@ -41,6 +55,7 @@
                     </div>
                 @endforeach
             </div>
+            {{$ogrenciler->withQueryString()->links()}}
         </div>
     </div>
 </x-app-layout>
