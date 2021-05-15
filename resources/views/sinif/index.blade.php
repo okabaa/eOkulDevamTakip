@@ -2,7 +2,7 @@
     <x-slot name="header">Sınıflar</x-slot>
     <div class="card">
         <div class="card-body">
-            <h5 class="card-title float-right">
+            <h5 class="card-title float-md-right">
                 <a href="{{route('sinif.create')}}" class="btn btn-sm btn-primary"><i class="fa fa-plus"></i> Sınıf
                     Oluştur</a>
             </h5>
@@ -43,7 +43,17 @@
                 @endforeach
             </div>
             </table>
-            {{$siniflar->withQueryString()->links()}}
+        </div>
+        <div class="card-footer">
+            <div class="float-left">
+                @if($siniflar->total()!=0)
+                    <p>Toplam {{$siniflar->total()}} kayıttan {{$siniflar->firstItem()}}
+                        - {{$siniflar->lastItem()}} arasındaki kayıtlar gösteriliyor </p>
+                @endif
+            </div>
+            <div class="float-right">
+                {{$siniflar->withQueryString()->onEachSide(5)->links()}}
+            </div>
         </div>
     </div>
 </x-app-layout>

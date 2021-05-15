@@ -2,7 +2,7 @@
     <x-slot name="header">Öğrenciler</x-slot>
     <div class="card">
         <div class="card-body">
-            <h5 class="card-title float-right">
+            <h5 class="card-title float-md-right">
                 <a href="{{route('ogrenci.create')}}" class="btn btn-sm btn-primary"><i class="fa fa-plus"></i> Öğrenci
                     Kaydet</a>
             </h5>
@@ -12,7 +12,17 @@
                         <input type="text" name="ara" value="{{request()->get('ara')}}" placeholder="Arama..."
                                class="form-control">
                     </div>
-                    @if(request()->get('ara'))
+
+                    <div class="col-md-3">
+                        <select name="sinif" class="form-control select2" onchange="this.form.submit()" >
+                            <option value="">Sınıf Seçebilirsiniz.</option>
+                            @foreach($siniflar as $sinif)
+                                <option {{request()->get('sinif')==$sinif->id?"selected=''":""}}
+                                        value="{{$sinif->id}}">{{$sinif->name}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    @if(request()->get('ara') || request()->get('sinif'))
                         <div class="col-md-2">
                             <a href=" {{route('ogrenci.index')}} " class="btn btn-secondary">Sıfırla</a>
                         </div>
@@ -55,7 +65,18 @@
                     </div>
                 @endforeach
             </div>
-            {{$ogrenciler->withQueryString()->links()}}
+        </div>
+
+        <div class="card-footer">
+            <div class="float-left">
+                @if($ogrenciler->total()!=0)
+                    <p>Toplam {{$ogrenciler->total()}} kayıttan {{$ogrenciler->firstItem()}}
+                        - {{$ogrenciler->lastItem()}} arasındaki kayıtlar gösteriliyor </p>
+                @endif
+            </div>
+            <div class="float-right">
+                {{$ogrenciler->withQueryString()->onEachSide(5)->links()}}
+            </div>
         </div>
     </div>
 </x-app-layout>

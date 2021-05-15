@@ -22,10 +22,14 @@ class UserFactory extends Factory
      */
     public function definition()
     {
+        $search = array('Ç','ç','Ğ','ğ','ı','İ','Ö','ö','Ş','ş','Ü','ü',' ');
+        $replace = array('c','c','g','g','i','i','o','o','s','s','u','u','.');
+        $name = $this->faker->firstName .' '.$this->faker->lastName;
+        $email = strtolower(str_replace($search,$replace,$name)).'@devamtakip.com';
         $role=['admin','teacher','student'];
         return [
-            'name' => $this->faker->name(),
-            'email' => $this->faker->unique()->safeEmail(),
+            'name' => $name,
+            'email' => $email,
             'email_verified_at' => now(),
             'role' => $role[rand(0,2)],
             'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password

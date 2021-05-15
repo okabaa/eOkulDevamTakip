@@ -21,10 +21,17 @@ class OgrenciFactory extends Factory
      */
     public function definition()
     {
+        $search = array('Ç','ç','Ğ','ğ','ı','İ','Ö','ö','Ş','ş','Ü','ü',' ');
+        $replace = array('c','c','g','g','i','i','o','o','s','s','u','u','.');
+        $lastName = $this->faker->lastName;
+        $name = $this->faker->firstName .' '.$lastName;
+        $parent_name = $this->faker->firstName .' '.$lastName;
+        $mail = strtolower(str_replace($search,$replace,$parent_name)).'@devamtakip.com';
+
         return [
-            'name' => $this->faker->name(),
-            'parent_name' => $this->faker->name(),
-            'email' => $this->faker->unique()->safeEmail()
+            'name' => $name,
+            'parent_name' => $parent_name,
+            'email' => $mail
         ];
     }
 }

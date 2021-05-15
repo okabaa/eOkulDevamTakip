@@ -8,6 +8,7 @@ use App\Models\Ogrenci;
 use App\Models\Sinif;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Illuminate\Database\Eloquent\Builder;
 
 class OgrenciController extends Controller
 {
@@ -18,15 +19,26 @@ class OgrenciController extends Controller
      */
     public function index()
     {
+        $siniflar = Sinif::all()->sortBy('name');
         if (request()->get('ara')) {
             $ogrenciler = Ogrenci::where('name', 'LIKE', "%" . request()->get('ara') . "%")
                 ->orWhere('parent_name', 'LIKE', "%" . request()->get('ara') . "%")
+                ->orWhereHas('sinif', function (Builder $query) {
+                    $query->where('name', 'LIKE', "%" . request()->get('ara') . "%");
+                });
+            if (request()->get('sinif')) {
+                $ogrenciler = $ogrenciler->where('sinif_id','=',request()->get('sinif'));
+
+            }
+            $ogrenciler = $ogrenciler->paginate(10);
+//            dd($ogrenciler);
+        } elseif (request()->get('sinif')) {
+            $ogrenciler = Ogrenci::where('sinif_id', '=', request()->get('sinif'))
                 ->paginate(10);
         } else {
-
             $ogrenciler = Ogrenci::paginate(10);
         }
-        return view('ogrenci.index', compact('ogrenciler'));
+        return view('ogrenci.index', compact('ogrenciler', 'siniflar'));
     }
 
     /**
