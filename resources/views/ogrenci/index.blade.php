@@ -75,7 +75,7 @@
                 @endif
             </div>
             <div class="float-right">
-                {{$ogrenciler->withQueryString()->onEachSide(5)->links()}}
+                {{$ogrenciler->withQueryString()->onEachSide(1)->links()}}
             </div>
         </div>
     </div>

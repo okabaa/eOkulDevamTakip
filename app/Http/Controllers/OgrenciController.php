@@ -21,17 +21,17 @@ class OgrenciController extends Controller
     {
         $siniflar = Sinif::all()->sortBy('name');
         if (request()->get('ara')) {
-            $ogrenciler = Ogrenci::where('name', 'LIKE', "%" . request()->get('ara') . "%")
-                ->orWhere('parent_name', 'LIKE', "%" . request()->get('ara') . "%")
-                ->orWhereHas('sinif', function (Builder $query) {
-                    $query->where('name', 'LIKE', "%" . request()->get('ara') . "%");
-                });
+            $ogrenciler = Ogrenci::where(function ($query) {
+                $query->where('name', 'LIKE', "%" . request()->get('ara') . "%")
+                    ->orWhere('parent_name', 'LIKE', "%" . request()->get('ara') . "%")
+                    ->orWhereHas('sinif', function (Builder $query) {
+                        $query->where('name', 'LIKE', "%" . request()->get('ara') . "%");
+                    });
+            });
             if (request()->get('sinif')) {
-                $ogrenciler = $ogrenciler->where('sinif_id','=',request()->get('sinif'));
-
+                $ogrenciler = $ogrenciler->where('sinif_id', '=', request()->get('sinif'));
             }
             $ogrenciler = $ogrenciler->paginate(10);
-//            dd($ogrenciler);
         } elseif (request()->get('sinif')) {
             $ogrenciler = Ogrenci::where('sinif_id', '=', request()->get('sinif'))
                 ->paginate(10);
