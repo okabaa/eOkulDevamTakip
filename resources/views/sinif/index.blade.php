@@ -3,8 +3,10 @@
     <div class="card">
         <div class="card-body">
             <h5 class="card-title float-md-right">
+                @can('isAdmin',Auth::user())
                 <a href="{{route('sinif.create')}}" class="btn btn-sm btn-primary"><i class="fa fa-plus"></i> Sınıf
                     Oluştur</a>
+                @endcan
             </h5>
             <form method="GET" action="">
                 <div class="form-row">
