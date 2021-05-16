@@ -45,10 +45,12 @@
                                         <div class="d-flex w-auto justify-content-between">
                                             <h5 class="card-title"></h5>
                                             <span>
+                                                @can('isAdmin',Auth::user())
                                                  <a href="{{route('ogrenci.edit',$ogrenci->id)}}"
                                                     class="btn btn-sm btn-primary"><i class="fa fa-pen"></i></a>
                                                  <a href="{{route('ogrenci.destroy',$ogrenci->id)}}"
                                                     class="btn btn-sm btn-danger"><i class="fa fa-times"></i></a>
+                                                @endcan
                                             </span>
                                         </div>
                                         <h4 class="card-title">{{$ogrenci->name}}</h4>

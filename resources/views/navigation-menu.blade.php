@@ -16,11 +16,16 @@
                         {{ __('Ana Sayfa') }}
                     </x-jet-nav-link>
                     @can('isAdmin',Auth::user())
+                        <x-jet-nav-link href="{{ route('kullanici.index') }}" :active="request()->routeIs('kullanici.index')">
+                            {{ __('Kullanıcılar') }}
+                        </x-jet-nav-link>
+                    @endcan
+                    @can('isTeacher',Auth::user())
                         <x-jet-nav-link href="{{ route('sinif.index') }}" :active="request()->routeIs('sinif.index')">
                             {{ __('Sınıflar') }}
                         </x-jet-nav-link>
                     @endcan
-                    @can('isAdmin',Auth::user())
+                    @can('isTeacher',Auth::user())
                         <x-jet-nav-link href="{{ route('ogrenci.index') }}" :active="request()->routeIs('ogrenci.index')">
                             {{ __('Öğrenciler') }}
                         </x-jet-nav-link>
@@ -167,12 +172,18 @@
                 {{ __('Ana Sayfa') }}
             </x-jet-responsive-nav-link>
             @can('isAdmin',Auth::user())
+                <x-jet-responsive-nav-link href="{{ route('kullanici.index') }}"
+                                           :active="request()->routeIs('kullanici.index')">
+                    {{ __('Kullanıcılar') }}
+                </x-jet-responsive-nav-link>
+            @endcan
+            @can('isTeacher',Auth::user())
                 <x-jet-responsive-nav-link href="{{ route('sinif.index') }}"
                                            :active="request()->routeIs('sinif.index')">
                     {{ __('Sınıflar') }}
                 </x-jet-responsive-nav-link>
             @endcan
-            @can('isAdmin',Auth::user())
+            @can('isTeacher',Auth::user())
                 <x-jet-responsive-nav-link href="{{ route('ogrenci.index') }}"
                                            :active="request()->routeIs('ogrenci.index')">
                     {{ __('Öğrenciler') }}
