@@ -1,27 +1,34 @@
 <x-app-layout>
-    <x-slot name="header">{{request()->get('sinif')?str_replace("Sınıfı","", $siniflar->where('id',request()->get('sinif'))->first()->name)." Sınıfına":""}} Öğrenci Kaydet</x-slot>
+    <x-slot name="header">Kullanici Kaydet</x-slot>
     <div class="card">
         <div class="card-body">
-            <form action="{{request()->get('sinif')?route('ogrenci.store',['sinif' => request()->get('sinif')]):route('ogrenci.store')}}" method="POST" enctype="multipart/form-data">
+            <form action="{{route('kullanici.store')}}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="form-group">
                     <label>Fotoğraf</label>
                     <input type="file" name="profile_photo_path" class="form-control">
                 </div>
                 <div class="form-group">
-                    <label>Öğrenci Adı </label>
+                    <label>Adı </label>
                     <input type="text" name="name" class="form-control" value="{{ old('name') }}">
                 </div>
                 <div class="form-group">
-                    <label>Veli Adı </label>
-                    <input type="text" name="parent_name" class="form-control" value="{{ old('parent_name') }}">
+                    <label>Rolü </label>
+                    <select name="role" class="form-control select2">
+                        <option value="teacher">Öğretmen</option>
+                        <option value="admin">Yönetici</option>
+                    </select>
                 </div>
                 <div class="form-group">
                     <label>e-Posta </label>
                     <input type="email" name="email" class="form-control" value="{{ old('email') }}">
                 </div>
                 <div class="form-group">
-                    <label>Sınıfı</label>
+                    <label>Parola</label>
+                    <input type="password" name="password" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label>Sorumlu Sınıfı</label>
                     <select name="sinif_id" class="form-control select2" {{request()->get('sinif')?"disabled":""}}>
                         <option value="">Sınıf Seçebilirsiniz.</option>
                         @foreach($siniflar as $sinif)

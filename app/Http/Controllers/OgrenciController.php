@@ -69,6 +69,9 @@ class OgrenciController extends Controller
             ]);
         }
         Ogrenci::create($request->post());
+        if (request()->get('sinif')) {
+            return redirect()->route('ogrenci.index',['sinif' => request()->get('sinif')])->withSuccess('Öğrenci Başarıyla Oluşturuldu');
+        }
         return redirect()->route('ogrenci.index')->withSuccess('Öğrenci Başarıyla Oluşturuldu');
     }
 

@@ -43,9 +43,9 @@
                     @foreach($errors->all() as $error)
                         <li>{{$error}}</li>
                     @endforeach
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
+{{--                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">--}}
+{{--                        <span aria-hidden="true">&times;</span>--}}
+{{--                    </button>--}}
                 </div>
             @endif
 
@@ -53,9 +53,9 @@
                 <div class="alert alert-success alert-dismissible fade show">
                     <i class="fa fa-check"></i>
                     {{session('success')}}
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
+{{--                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">--}}
+{{--                        <span aria-hidden="true">&times;</span>--}}
+{{--                    </button>--}}
                 </div>
             @endif
             {{ $slot }}

@@ -26,10 +26,12 @@ Route::group([
     'middleware' => ['auth', 'isAdmin'],
     'namespace' => '\App\Http\Controllers'
 ], function () {
+    Route::get('kullanici/{id}',[\App\Http\Controllers\KullaniciController::class,'destroy'])->whereNumber('id')->name('kullanici.destroy');
     Route::get('sinif/{id}',[\App\Http\Controllers\SinifController::class,'destroy'])->whereNumber('id')->name('sinif.destroy');
     Route::get('ogrenci/{id}',[\App\Http\Controllers\OgrenciController::class,'destroy'])->whereNumber('id')->name('ogrenci.destroy');
     Route::resource('sinif', SinifController::class);
     Route::resource('ogrenci', OgrenciController::class);
+    Route::resource('kullanici', KullaniciController::class);
     Route::get('deneme', function () {
         return "middleware testi";
     });

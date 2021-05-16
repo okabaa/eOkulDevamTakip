@@ -24,14 +24,14 @@ class UserFactory extends Factory
     {
         $search = array('Ç','ç','Ğ','ğ','ı','İ','Ö','ö','Ş','ş','Ü','ü',' ');
         $replace = array('c','c','g','g','i','i','o','o','s','s','u','u','.');
-        $name = $this->faker->firstName .' '.$this->faker->lastName;
-        $email = strtolower(str_replace($search,$replace,$name)).'@devamtakip.com';
-        $role=['admin','teacher','student'];
+        $name = $this->faker->name;
+        $email = strtolower(str_replace($search,$replace,str_replace(".","",$name))).'@devamtakip.com';
+        $role=['admin','teacher'];
         return [
             'name' => $name,
             'email' => $email,
             'email_verified_at' => now(),
-            'role' => $role[rand(0,2)],
+            'role' => $role[rand(0,1)],
             'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
             'remember_token' => Str::random(10),
         ];

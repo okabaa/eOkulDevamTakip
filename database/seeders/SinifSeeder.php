@@ -17,6 +17,7 @@ class SinifSeeder extends Seeder
         for ($i=0;$i<=20;$i++) {
             Sinif::factory(1)
                 ->hasOgrenciler(rand(12, 20))
+                ->hasKullanici(rand(0, 1))
                 ->create();
         }
     }

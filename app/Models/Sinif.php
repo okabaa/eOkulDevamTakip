@@ -15,4 +15,9 @@ class Sinif extends Model
     {
         return $this->hasMany(Ogrenci::class);
     }
+
+    public function kullanici()
+    {
+        return $this->hasOne(User::class);
+    }
 }

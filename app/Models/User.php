@@ -27,6 +27,11 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'email_verified_at',
+        'remember_token',
+        'role',
+        'sinif_id',
+        'profile_photo_path'
     ];
 
     /**
@@ -58,4 +63,9 @@ class User extends Authenticatable
     protected $appends = [
         'profile_photo_url',
     ];
+
+    public function sinif()
+    {
+        return $this->belongsTo(Sinif::class);
+    }
 }

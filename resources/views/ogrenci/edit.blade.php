@@ -1,5 +1,5 @@
 <x-app-layout>
-    <x-slot name="header">Öğrenci Kaydet</x-slot>
+    <x-slot name="header">Öğrenci Güncelleme</x-slot>
     <div class="card">
         <div class="card-body">
             <form action="{{route('ogrenci.update',$ogrenci->id)}}" method="POST" enctype="multipart/form-data">
