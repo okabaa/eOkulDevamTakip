@@ -19,6 +19,7 @@ class DatabaseSeeder extends Seeder
             UserSeeder::class,
             SinifSeeder::class,
             OgrenciSeeder::class,
+            DevamTakipSeeder::class,
         ]);
     }
 }

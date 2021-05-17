@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\SinifCreateRequest;
 use App\Http\Requests\SinifUpdateRequest;
+use App\Models\DevamTakip;
+use App\Models\DevamTakipOgrenci;
+use App\Models\Ogrenci;
 use App\Models\Sinif;
 use Illuminate\Http\Request;
 

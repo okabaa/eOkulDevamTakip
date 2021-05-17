@@ -30,6 +30,11 @@
                             {{ __('Öğrenciler') }}
                         </x-jet-nav-link>
                     @endcan
+                    @can('isTeacher',Auth::user())
+                        <x-jet-nav-link href="{{ route('devamTakip.index') }}" :active="request()->routeIs('devamTakip.index')">
+                            {{ __('Devam Takip') }}
+                        </x-jet-nav-link>
+                    @endcan
                 </div>
             </div>
 
@@ -187,6 +192,12 @@
                 <x-jet-responsive-nav-link href="{{ route('ogrenci.index') }}"
                                            :active="request()->routeIs('ogrenci.index')">
                     {{ __('Öğrenciler') }}
+                </x-jet-responsive-nav-link>
+            @endcan
+            @can('isTeacher',Auth::user())
+                <x-jet-responsive-nav-link href="{{ route('devamTakip.index') }}"
+                                           :active="request()->routeIs('devamTakip.index')">
+                    {{ __('Devam Takip') }}
                 </x-jet-responsive-nav-link>
             @endcan
         </div>

@@ -20,4 +20,8 @@ class Sinif extends Model
     {
         return $this->hasOne(User::class);
     }
+
+    public function devamTakipler(){
+    return $this->hasMany(DevamTakip::class);
+    }
 }
