@@ -41,7 +41,7 @@
                                     </span>
                                 </div>
                                 <p class="card-text">{{$sinif->description}}</p>
-                                <p class="card-text"><small class="text-muted">Sınıfta kayıtlı {{$sinif->ogrenciler_count}} öğrenci
+                                    <p class="card-text"><small class="text-muted">Sınıfta kayıtlı {{$sinif->ogrenciler_count}} öğrenci
                                         bulunmaktadır.</small></p>
                             </div>
                         </div>

@@ -17,6 +17,7 @@
 
     <!-- Scripts -->
     <script src="{{ mix('js/app.js') }}"></script>
+    <script src="https://kit.fontawesome.com/f9ccb2874c.js" crossorigin="anonymous"></script>
 </head>
 <body class="font-sans antialiased">
 <x-jet-banner/>

@@ -1,5 +1,5 @@
 require('jquery');
-require('./bootstrap');
+require('bootstrap');
 require('alpinejs');
 
 import $ from 'jquery'
