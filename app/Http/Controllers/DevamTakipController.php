@@ -14,7 +14,18 @@ class DevamTakipController extends Controller
      */
     public function index()
     {
-        //
+        $devamTakipler = DevamTakip::withCount('ogrenciler')->withSum('ogrenciler','devam');
+
+        if(request()->get('ara')){
+            $devamTakipler = $devamTakipler
+                ->where('name','LIKE',"%".request()->get('ara')."%")
+                ->orWhere('description','LIKE',"%".request()->get('ara')."%");
+        }
+
+        $devamTakipler = $devamTakipler->paginate(10);
+
+        return view('devamtakip.index', compact('devamTakipler'));
+
     }
 
     /**

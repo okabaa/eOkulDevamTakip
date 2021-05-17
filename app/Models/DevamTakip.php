@@ -13,4 +13,8 @@ class DevamTakip extends Model
     {
         return $this->belongsTo(Sinif::class);
     }
+
+    public function ogrenciler(){
+        return $this->hasMany(DevamTakipOgrenci::class);
+    }
 }

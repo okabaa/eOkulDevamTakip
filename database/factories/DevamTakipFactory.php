@@ -22,7 +22,7 @@ class DevamTakipFactory extends Factory
     public function definition()
     {
         return [
-            'name' => $this->faker->name.' Dersi',
+            'name' => $this->faker->colorName().' Dersi',
             'date' => $this->faker->dateTimeThisMonth,
             'hour' => rand(1,10)
         ];

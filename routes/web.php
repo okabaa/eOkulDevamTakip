@@ -36,11 +36,8 @@ Route::namespace('\App\Http\Controllers')
         Route::middleware(['auth', 'isTeacher'])->group(function () {
             Route::resource('sinif', SinifController::class)->only(['index']);
             Route::resource('ogrenci', OgrenciController::class)->only(['index']);
-//            Route::resources([
-//                'devamtakip' => DevamTakipController::class,
-//            ]);
-            Route::get('devamtakip', function () {
-                return view('devamTakip.create');
-            })->name('devamTakip.index');
+            Route::resources([
+                'devamtakip' => DevamTakipController::class,
+            ]);
         });
     });
