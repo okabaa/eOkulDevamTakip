@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\DevamTakip;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class DevamTakipController extends Controller
 {
@@ -17,11 +18,18 @@ class DevamTakipController extends Controller
     {
         $devamTakipler = DevamTakip::withCount('ogrenciler')->withSum('ogrenciler', 'devam');
 
+        if(Auth::user()->role !='admin'){
+            $devamTakipler->where('user_id',Auth::user()->id);
+        }
+
         if (request()->get('ara')) {
             $devamTakipler = $devamTakipler
                 ->where(function ($query) {
                     $query->where('name', 'LIKE', "%" . request()->get('ara') . "%")
                         ->orWhereHas('sinif', function (Builder $query) {
+                            $query->where('name', 'LIKE', "%" . request()->get('ara') . "%");
+                        })
+                        ->orWhereHas('user', function (Builder $query) {
                             $query->where('name', 'LIKE', "%" . request()->get('ara') . "%");
                         });
                 });

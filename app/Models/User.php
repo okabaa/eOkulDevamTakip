@@ -68,4 +68,9 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Sinif::class);
     }
+
+    public function devamTakipler()
+    {
+        return $this->hasMany(DevamTakip::class);
+    }
 }

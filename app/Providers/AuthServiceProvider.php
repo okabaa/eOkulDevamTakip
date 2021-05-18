@@ -2,7 +2,10 @@
 
 namespace App\Providers;
 
+use App\Models\DevamTakip;
+use App\Models\User;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 
 class AuthServiceProvider extends ServiceProvider
@@ -30,6 +33,9 @@ class AuthServiceProvider extends ServiceProvider
         });
         Gate::define('isTeacher', function ($user) {
             return $user->role === 'admin' || 'teacher';
+        });
+        Gate::define('isAuthUser', function ($user, $devamTakip) {
+            return $user->id === $devamTakip->user_id;
         });
     }
 }
