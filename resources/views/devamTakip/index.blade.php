@@ -29,7 +29,7 @@
                         <div class="card">
                             <div class="card-body">
                                 <div class="d-flex w-100 justify-content-between">
-                                    <h5 class="card-title">{{$devamTakip->name}}</h5>
+                                    <h5 class="card-title"></h5>
                                     <span>
                                         @can('isTeacher',Auth::user())
                                             <a href="{{route('devamtakip.show', $devamTakip->id)}}"
@@ -41,6 +41,7 @@
                                         @endcan
                                     </span>
                                 </div>
+                                <h5 class="card-title">{{$devamTakip->name}}</h5>
                                 <p class="card-text">{{str_replace("Sınıfı","", $devamTakip->sinif->name)." sınıfının"}}
                                     {{date('d.m.Y', strtotime($devamTakip->date))}}
                                     tarihindeki {{$devamTakip->hour}}. ders saati devam takibidir.</p>

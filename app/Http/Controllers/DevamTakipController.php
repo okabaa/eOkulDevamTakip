@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\DevamTakip;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 
 class DevamTakipController extends Controller
@@ -14,15 +15,19 @@ class DevamTakipController extends Controller
      */
     public function index()
     {
-        $devamTakipler = DevamTakip::withCount('ogrenciler')->withSum('ogrenciler','devam');
+        $devamTakipler = DevamTakip::withCount('ogrenciler')->withSum('ogrenciler', 'devam');
 
-        if(request()->get('ara')){
+        if (request()->get('ara')) {
             $devamTakipler = $devamTakipler
-                ->where('name','LIKE',"%".request()->get('ara')."%")
-                ->orWhere('description','LIKE',"%".request()->get('ara')."%");
+                ->where(function ($query) {
+                    $query->where('name', 'LIKE', "%" . request()->get('ara') . "%")
+                        ->orWhereHas('sinif', function (Builder $query) {
+                            $query->where('name', 'LIKE', "%" . request()->get('ara') . "%");
+                        });
+                });
         }
 
-        $devamTakipler = $devamTakipler->paginate(10);
+        $devamTakipler = $devamTakipler->paginate(9);
 
         return view('devamtakip.index', compact('devamTakipler'));
 
@@ -41,7 +46,7 @@ class DevamTakipController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -52,7 +57,7 @@ class DevamTakipController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\DevamTakip  $devamTakip
+     * @param \App\Models\DevamTakip $devamTakip
      * @return \Illuminate\Http\Response
      */
     public function show(DevamTakip $devamTakip)
@@ -63,7 +68,7 @@ class DevamTakipController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\DevamTakip  $devamTakip
+     * @param \App\Models\DevamTakip $devamTakip
      * @return \Illuminate\Http\Response
      */
     public function edit(DevamTakip $devamTakip)
@@ -74,8 +79,8 @@ class DevamTakipController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\DevamTakip  $devamTakip
+     * @param \Illuminate\Http\Request $request
+     * @param \App\Models\DevamTakip $devamTakip
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, DevamTakip $devamTakip)
@@ -86,7 +91,7 @@ class DevamTakipController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\DevamTakip  $devamTakip
+     * @param \App\Models\DevamTakip $devamTakip
      * @return \Illuminate\Http\Response
      */
     public function destroy(DevamTakip $devamTakip)
