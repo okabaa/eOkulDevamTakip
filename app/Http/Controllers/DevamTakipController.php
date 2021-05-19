@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\DevamTakip;
+use App\Models\Sinif;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -16,10 +17,11 @@ class DevamTakipController extends Controller
      */
     public function index()
     {
+        $siniflar = Sinif::all()->sortBy('name');
         $devamTakipler = DevamTakip::withCount('ogrenciler')->withSum('ogrenciler', 'devam');
 
-        if(Auth::user()->role !='admin'){
-            $devamTakipler->where('user_id',Auth::user()->id);
+        if (Auth::user()->role != 'admin') {
+            $devamTakipler->where('user_id', Auth::user()->id);
         }
 
         if (request()->get('ara')) {
@@ -33,11 +35,16 @@ class DevamTakipController extends Controller
                             $query->where('name', 'LIKE', "%" . request()->get('ara') . "%");
                         });
                 });
+            if (request()->get('sinif')) {
+                $devamTakipler = $devamTakipler->where('sinif_id', '=', request()->get('sinif'));
+            }
+        } elseif (request()->get('sinif')) {
+            $devamTakipler = $devamTakipler->where('sinif_id', '=', request()->get('sinif'));
         }
 
         $devamTakipler = $devamTakipler->paginate(9);
 
-        return view('devamtakip.index', compact('devamTakipler'));
+        return view('devamtakip.index', compact('devamTakipler', 'siniflar'));
 
     }
 

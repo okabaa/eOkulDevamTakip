@@ -1,5 +1,5 @@
 <x-app-layout>
-    <x-slot name="header">Sınıflar</x-slot>
+    <x-slot name="header">{{request()->get('sinif')?str_replace("Sınıfı","", $siniflar->where('id',request()->get('sinif'))->first()->name)." Sınıfı":""}} Devam Takipler{{request()->get('sinif')?"i":""}}</x-slot>
     <div class="card">
         <div class="card-body">
             <h5 class="card-title float-md-right">
@@ -15,7 +15,16 @@
                         <input type="text" name="ara" value="{{request()->get('ara')}}" placeholder="Arama..."
                                class="form-control">
                     </div>
-                    @if(request()->get('ara'))
+                    <div class="col-md-3">
+                        <select name="sinif" class="form-control select2" onchange="this.form.submit()" >
+                            <option value="">Sınıf Seçebilirsiniz.</option>
+                            @foreach($siniflar as $sinif)
+                                <option {{request()->get('sinif')==$sinif->id?"selected=''":""}}
+                                        value="{{$sinif->id}}">{{$sinif->name}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    @if(request()->get('ara') || request()->get('sinif'))
                         <div class="col-md-2">
                             <a href=" {{route('devamtakip.index')}} " class="btn btn-secondary">Sıfırla</a>
                         </div>
@@ -33,7 +42,7 @@
                                     <span>
                                         @canany(['isAdmin','isAuthUser'],$devamTakip)
                                             <a href="{{route('devamtakip.show', $devamTakip->id)}}"
-                                               class="btn btn-sm btn-warning"><i class="fa fa-users"></i></a>
+                                               class="btn btn-sm btn-warning"><i class="fa fa-users-cog"></i></a>
                                         @endcanany
                                         @can('isAuthUser',$devamTakip)
                                             <a href="{{route('devamtakip.edit',$devamTakip->id)}}"
