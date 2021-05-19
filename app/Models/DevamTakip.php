@@ -9,6 +9,8 @@ class DevamTakip extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['sinif_id', 'name', 'date', 'hour', 'user_id'];
+
     public function sinif()
     {
         return $this->belongsTo(Sinif::class);

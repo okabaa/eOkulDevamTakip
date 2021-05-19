@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\DevamTakipCreateRequest;
 use App\Models\DevamTakip;
+use App\Models\DevamTakipOgrenci;
+use App\Models\Ogrenci;
 use App\Models\Sinif;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
@@ -65,9 +68,21 @@ class DevamTakipController extends Controller
      * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(DevamTakipCreateRequest $request)
     {
-        //
+        $request->merge([
+            'user_id' => Auth::user()->id,
+        ]);
+        $devamTakip = DevamTakip::create($request->post());
+        $ogrenciler = Ogrenci::where('sinif_id', $devamTakip->sinif_id)->get();
+        foreach ($ogrenciler as $ogrenci) {
+            DevamTakipOgrenci::create([
+                'devam_takip_id' => $devamTakip->id,
+                'ogrenci_id' => $ogrenci->id,
+                'devam' => 1
+            ]);
+        }
+        return redirect()->route('devamtakipliste.edit', $devamTakip->id)->withSuccess('Devam Takip Kaydı Başarıyla Oluşturuldu.');
     }
 
     /**
@@ -87,9 +102,14 @@ class DevamTakipController extends Controller
      * @param \App\Models\DevamTakip $devamTakip
      * @return \Illuminate\Http\Response
      */
-    public function edit(DevamTakip $devamTakip)
+    public function edit($devamTakipOgenciId)
     {
-        //
+        $devamTakipOgenci = DevamTakipOgrenci::find($devamTakipOgenciId) ?? abort(404, 'Devam Takip Listesinde Öğrenci Bulunamadı');
+
+        DevamTakipOgrenci::where('id', $devamTakipOgenciId)->update([
+            'devam' => $devamTakipOgenci->devam == 1 ? 0 : 1
+        ]);
+        return redirect()->route('devamtakipliste.edit', $devamTakipOgenci->devam_takip_id)->withSuccess($devamTakipOgenci->ogrenci->name . ' isimli öğrencinin devam durumu güncelleme işlemi başarıyla gerçekleşti');
     }
 
     /**

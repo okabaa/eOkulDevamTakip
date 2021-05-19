@@ -45,7 +45,7 @@
                                                class="btn btn-sm btn-warning"><i class="fa fa-users-cog"></i></a>
                                         @endcanany
                                         @can('isAuthUser',$devamTakip)
-                                            <a href="{{route('devamtakip.edit',$devamTakip->id)}}"
+                                            <a href="{{route('devamtakipliste.edit',$devamTakip->id)}}"
                                                class="btn btn-sm btn-primary"><i class="fa fa-pen"></i></a>
                                             <a href="{{route('devamtakip.destroy',$devamTakip->id)}}"
                                                class="btn btn-sm btn-danger"><i class="fa fa-times"></i></a>
