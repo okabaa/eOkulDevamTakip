@@ -16,4 +16,8 @@ class Ogrenci extends Model
         return $this->belongsTo(Sinif::class);
     }
 
+    public function devamTakipListesi (){
+        return $this->hasMany(DevamTakipOgrenci::class);
+    }
+
 }

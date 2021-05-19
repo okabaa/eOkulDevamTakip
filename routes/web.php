@@ -39,5 +39,6 @@ Route::namespace('\App\Http\Controllers')
             Route::resources([
                 'devamtakip' => DevamTakipController::class,
             ]);
+            Route::resource('devamtakipliste', DevamTakipOgrenciController::class)->only(['show','edit']);
         });
     });

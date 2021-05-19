@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\DevamTakip;
 use App\Models\DevamTakipOgrenci;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 
 class DevamTakipOgrenciController extends Controller
@@ -44,9 +46,23 @@ class DevamTakipOgrenciController extends Controller
      * @param  \App\Models\DevamTakipOgrenci  $devamTakipOgrenci
      * @return \Illuminate\Http\Response
      */
-    public function show(DevamTakipOgrenci $devamTakipOgrenci)
+    public function show($devamTakipId)
     {
-        //
+        $devamTakip = DevamTakip::whereId($devamTakipId)->withCount('ogrenciler')->withSum('ogrenciler', 'devam')->first();
+        $devamTakipListe = DevamTakipOgrenci::where('devam_takip_id',$devamTakipId)->with('ogrenci');
+
+        if (request()->get('ara')) {
+            $devamTakipListe = $devamTakipListe
+                ->where(function ($query) {
+                    $query->whereHas('ogrenci', function (Builder $query) {
+                        $query->where('name', 'LIKE', "%" . request()->get('ara') . "%")
+                            ->orWhere('parent_name', 'LIKE', "%" . request()->get('ara') . "%");
+                    });
+                });
+        }
+        $devamTakipListe = $devamTakipListe->paginate(9);
+//        return $devamTakip;
+        return view('devamtakip.show', compact('devamTakipListe','devamTakip'));
     }
 
     /**

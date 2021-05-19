@@ -55,7 +55,8 @@ class DevamTakipController extends Controller
      */
     public function create()
     {
-        //
+        $siniflar = Sinif::all()->sortBy('name');
+        return view('devamtakip.create', compact('siniflar'));
     }
 
     /**
@@ -75,7 +76,7 @@ class DevamTakipController extends Controller
      * @param \App\Models\DevamTakip $devamTakip
      * @return \Illuminate\Http\Response
      */
-    public function show(DevamTakip $devamTakip)
+    public function show($id)
     {
         //
     }

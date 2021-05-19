@@ -10,4 +10,11 @@ class DevamTakipOgrenci extends Model
     use HasFactory;
 
     protected $fillable = ['devam_takip_id', 'ogrenci_id', 'devam'];
+
+    public function devamTakip () {
+        return $this->belongsTo(DevamTakip::class);
+    }
+    public function ogrenci(){
+        return $this->belongsTo(Ogrenci::class);
+    }
 }
