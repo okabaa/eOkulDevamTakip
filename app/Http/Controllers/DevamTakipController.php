@@ -36,6 +36,11 @@ class DevamTakipController extends Controller
                         })
                         ->orWhereHas('user', function (Builder $query) {
                             $query->where('name', 'LIKE', "%" . request()->get('ara') . "%");
+                        })
+                        ->orWhereHas('ogrenciler', function (Builder $query) {
+                            $query->whereHas('ogrenci', function (Builder $query) {
+                                $query->where('name', 'LIKE', "%" . request()->get('ara') . "%");
+                            });
                         });
                 });
             if (request()->get('sinif')) {
@@ -44,6 +49,7 @@ class DevamTakipController extends Controller
         } elseif (request()->get('sinif')) {
             $devamTakipler = $devamTakipler->where('sinif_id', '=', request()->get('sinif'));
         }
+
 
         $devamTakipler = $devamTakipler->paginate(9);
 

@@ -1,5 +1,7 @@
 <x-app-layout>
-    <x-slot name="header">{{request()->get('sinif')?str_replace("Sınıfı","", $siniflar->where('id',request()->get('sinif'))->first()->name)." Sınıfı":""}} Devam Takipler{{request()->get('sinif')?"i":""}}</x-slot>
+    <x-slot
+        name="header">{{request()->get('sinif')?str_replace("Sınıfı","", $siniflar->where('id',request()->get('sinif'))->first()->name)." Sınıfı":""}}
+        Devam Takipler{{request()->get('sinif')?"i":""}}</x-slot>
     <div class="card">
         <div class="card-body">
             <h5 class="card-title float-md-right">
@@ -16,7 +18,7 @@
                                class="form-control">
                     </div>
                     <div class="col-md-3">
-                        <select name="sinif" class="form-control select2" onchange="this.form.submit()" >
+                        <select name="sinif" class="form-control select2" onchange="this.form.submit()">
                             <option value="">Sınıf Seçebilirsiniz.</option>
                             @foreach($siniflar as $sinif)
                                 <option {{request()->get('sinif')==$sinif->id?"selected=''":""}}
@@ -24,7 +26,7 @@
                             @endforeach
                         </select>
                     </div>
-                    @if(request()->get('ara') || request()->get('sinif'))
+                    @if(request()->get('ara') || request()->get('sinif') || request()->get('ogrenci'))
                         <div class="col-md-2">
                             <a href=" {{route('devamtakip.index')}} " class="btn btn-secondary">Sıfırla</a>
                         </div>
@@ -40,16 +42,16 @@
                                 <div class="d-flex w-100 justify-content-between">
                                     <h5 class="card-title"></h5>
                                     <span>
-                                        @canany(['isAdmin','isAuthUser'],$devamTakip)
-                                            <a href="{{route('devamtakipliste.show', $devamTakip->id)}}"
-                                               class="btn btn-sm btn-warning"><i class="fa fa-users-cog"></i></a>
-                                        @endcanany
-                                        @can('isAuthUser',$devamTakip)
-                                            <a href="{{route('devamtakipliste.edit',$devamTakip->id)}}"
-                                               class="btn btn-sm btn-primary"><i class="fa fa-pen"></i></a>
-                                            <a href="{{route('devamtakip.destroy',$devamTakip->id)}}"
-                                               class="btn btn-sm btn-danger"><i class="fa fa-times"></i></a>
-                                        @endcan
+                                            @canany(['isAdmin','isAuthUser'],$devamTakip)
+                                                <a href="{{route('devamtakipliste.show', $devamTakip->id)}}"
+                                                   class="btn btn-sm btn-warning"><i class="fa fa-users-cog"></i></a>
+                                            @endcanany
+                                            @can('isAuthUser',$devamTakip)
+                                                <a href="{{route('devamtakipliste.edit',$devamTakip->id)}}"
+                                                   class="btn btn-sm btn-primary"><i class="fa fa-pen"></i></a>
+                                                <a href="{{route('devamtakip.destroy',$devamTakip->id)}}"
+                                                   class="btn btn-sm btn-danger"><i class="fa fa-times"></i></a>
+                                            @endcan
                                     </span>
                                 </div>
                                 <h5 class="card-title">{{$devamTakip->name}}</h5>

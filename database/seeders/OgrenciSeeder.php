@@ -14,6 +14,6 @@ class OgrenciSeeder extends Seeder
      */
     public function run()
     {
-        Ogrenci::factory(20)->create();
+        Ogrenci::factory(5)->create();
     }
 }

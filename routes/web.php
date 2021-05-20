@@ -17,9 +17,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::middleware(['auth', 'verified'])->get('/panel', function () {
-    return view('dashboard');
-})->name('dashboard');
+Route::middleware(['auth', 'verified'])->get('/panel', [\App\Http\Controllers\MainController::class, 'index'])->name('dashboard');
 
 Route::namespace('\App\Http\Controllers')
     ->group(function () {
