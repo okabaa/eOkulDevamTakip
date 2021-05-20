@@ -26,7 +26,7 @@ class KullaniciUpdateRequest extends FormRequest
         return [
             'name' => 'required|max:150',
             'role' => 'required',
-            'password' => 'required|Min:8',
+            'password' => 'nullable|Min:8',
             'email' => 'required|email',
             'profile_photo_path'=>'image|nullable|max:1024|mimes:jpg,jpeg,png',
         ];

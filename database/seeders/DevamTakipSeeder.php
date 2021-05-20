@@ -21,11 +21,12 @@ class DevamTakipSeeder extends Seeder
         for ($i = 1; $i <= 20; $i++) {
             for ($j = 1; $j <= 5; $j++) {
                 $k++;
+                $sinif = rand(1,20);
                 DevamTakip::factory(1)->create([
                     'user_id' => $i,
-                    'sinif_id' => $i
+                    'sinif_id' => $sinif
                 ]);
-                $ogrenciler = Ogrenci::where('sinif_id', $i)->get();
+                $ogrenciler = Ogrenci::where('sinif_id', $sinif)->get();
                 foreach ($ogrenciler as $ogrenci) {
                     DevamTakipOgrenci::create([
                         'devam_takip_id' => $k,
