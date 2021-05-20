@@ -130,8 +130,10 @@ class DevamTakipController extends Controller
      * @param \App\Models\DevamTakip $devamTakip
      * @return \Illuminate\Http\Response
      */
-    public function destroy(DevamTakip $devamTakip)
+    public function destroy($id)
     {
-        //
+        $devamTakip = DevamTakip::find($id) ?? abort(404, 'Devam kakip kaydı Bulunamadı');
+        $devamTakip->delete();
+        return redirect()->route('devamtakip.index')->withSuccess('Devam takip kaydı silme işlemi başarıyla gerçekleşti');
     }
 }

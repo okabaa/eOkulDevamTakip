@@ -16,7 +16,7 @@ class UserSeeder extends Seeder
     public function run()
     {
         User::insert([
-            'name' => 'Ömer Alp KABA',
+            'name' => 'Alp KABA',
             'email' => 'yonetici@devamtakip.com',
             'email_verified_at' => now(),
             'role' => 'admin',
@@ -25,7 +25,7 @@ class UserSeeder extends Seeder
         ]);
 
         User::insert([
-            'name' => 'Öykü Ece KABA',
+            'name' => 'Ece KABA',
             'email' => 'ogretmen@devamtakip.com',
             'email_verified_at' => now(),
             'role' => 'teacher',

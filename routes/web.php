@@ -34,6 +34,7 @@ Route::namespace('\App\Http\Controllers')
             ]);
         });
         Route::middleware(['auth', 'isTeacher'])->group(function () {
+            Route::get('devamtakip/{id}', [\App\Http\Controllers\DevamTakipController::class, 'destroy'])->whereNumber('id')->name('devamtakip.destroy');
             Route::resource('sinif', SinifController::class)->only(['index']);
             Route::resource('ogrenci', OgrenciController::class)->only(['index']);
             Route::resources([
