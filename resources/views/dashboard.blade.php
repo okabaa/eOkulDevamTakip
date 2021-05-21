@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">Anasayfa</x-slot>
     <div class="row row-cols-1 row-cols-md-3">
-        <div class="col">
+        <div class="col mt-3">
             <div class="card">
                 <div class="card-header">
                     En Çok Devamsızlık Yapan 5 Öğrenci
@@ -15,7 +15,7 @@
                 </ul>
             </div>
         </div>
-        <div class="col">
+        <div class="col mt-3">
             <div class="card">
                 <div class="card-header">
                     Devamsızlık Oranı En Yüksek 5 Sınıf
@@ -31,7 +31,7 @@
                 </ul>
             </div>
         </div>
-        <div class="col">
+        <div class="col mt-3">
             <div class="card">
                 <div class="card-header">
                     Devamsızlık Oranı En Yüksek 5 Ders

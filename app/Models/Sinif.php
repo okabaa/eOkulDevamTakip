@@ -45,6 +45,7 @@ class Sinif extends Model
         }
         return $devam;
     }
+
     public function getDevamliYuzdeAttribute()
     {
         return $this->dersler == 0 ? 0 : number_format($this->devamli / $this->dersler * 100, 0);
@@ -65,7 +66,8 @@ class Sinif extends Model
         return $this->hasOne(User::class);
     }
 
-    public function devamTakipler(){
-    return $this->hasMany(DevamTakip::class);
+    public function devamTakipler()
+    {
+        return $this->hasMany(DevamTakip::class);
     }
 }
