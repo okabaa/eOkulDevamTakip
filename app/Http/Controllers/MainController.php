@@ -6,6 +6,7 @@ use App\Models\DevamTakip;
 use App\Models\DevamTakipOgrenci;
 use App\Models\Ogrenci;
 use App\Models\Sinif;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 
@@ -69,5 +70,15 @@ class MainController extends Controller
         $topBesSinif = $siniflar->orderBy('devamsizYuzde', 'desc')->take(5)->get();
         $topBesOgrenci = $ogrenciler->orderBy('devamsiz', 'desc')->take(5)->get();
         return view('dashboard', compact('topBesDers','topBesSinif','topBesOgrenci'));
+    }
+    public function welcome(){
+        $data['ogrenci'] = Ogrenci::count();
+        $data['ogretmen'] = User::whereRole('teacher')->count();
+        $data['yonetici'] = User::whereRole('admin')->count();
+        $data['sinif'] = Sinif::count();
+        $data['dersler'] = DevamTakip::count();
+        $data['ders'] = DevamTakip::select('name')->selectRaw('count(*) as ders')->groupBy('name')->count();
+
+        return view('welcome',compact('data'));
     }
 }

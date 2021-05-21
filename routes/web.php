@@ -13,9 +13,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [\App\Http\Controllers\MainController::class, 'welcome']);
 
 Route::middleware(['auth', 'verified'])->get('/panel', [\App\Http\Controllers\MainController::class, 'index'])->name('dashboard');
 
@@ -38,6 +36,6 @@ Route::namespace('\App\Http\Controllers')
             Route::resources([
                 'devamtakip' => DevamTakipController::class,
             ]);
-            Route::resource('devamtakipliste', DevamTakipOgrenciController::class)->only(['show','edit']);
+            Route::resource('devamtakipliste', DevamTakipOgrenciController::class)->only(['show', 'edit']);
         });
     });
