@@ -48,6 +48,7 @@ class DevamTakipOgrenciController extends Controller
      */
     public function show($devamTakipId)
     {
+        $devamTakip = DevamTakip::find($devamTakipId) ?? abort(404, 'Devam kakip kaydı Bulunamadı');
         $devamTakip = DevamTakip::whereId($devamTakipId)->withCount('ogrenciler')->withSum('ogrenciler', 'devam')->first();
         $devamTakipListe = DevamTakipOgrenci::where('devam_takip_id',$devamTakipId)->with('ogrenci');
 

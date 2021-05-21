@@ -36,6 +36,11 @@ class DevamTakipController extends Controller
                         })
                         ->orWhereHas('user', function (Builder $query) {
                             $query->where('name', 'LIKE', "%" . request()->get('ara') . "%");
+                        })
+                        ->orWhereHas('ogrenciler', function (Builder $query) {
+                            $query->whereHas('ogrenci', function (Builder $query) {
+                                $query->where('name', 'LIKE', "%" . request()->get('ara') . "%");
+                            });
                         });
                 });
             if (request()->get('sinif')) {
@@ -44,6 +49,7 @@ class DevamTakipController extends Controller
         } elseif (request()->get('sinif')) {
             $devamTakipler = $devamTakipler->where('sinif_id', '=', request()->get('sinif'));
         }
+
 
         $devamTakipler = $devamTakipler->paginate(9);
 
@@ -130,8 +136,10 @@ class DevamTakipController extends Controller
      * @param \App\Models\DevamTakip $devamTakip
      * @return \Illuminate\Http\Response
      */
-    public function destroy(DevamTakip $devamTakip)
+    public function destroy($id)
     {
-        //
+        $devamTakip = DevamTakip::find($id) ?? abort(404, 'Devam kakip kaydı Bulunamadı');
+        $devamTakip->delete();
+        return redirect()->route('devamtakip.index')->withSuccess('Devam takip kaydı silme işlemi başarıyla gerçekleşti');
     }
 }

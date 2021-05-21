@@ -42,7 +42,13 @@
                     <div class="card p-2"><p class="card-text"><b>Ders Saati:</b> {{$devamTakip->hour}}. Ders</p></div>
                 </div>
                 <div class="col">
-                    <div class="card p-2"><p class="card-text"><b>Ders Öğretmeni:</b> {{$devamTakip->user->name}}</p>
+                    <div class="card p-2"><p class="card-text"><b>Ders Öğretmeni:</b>
+                            @cannot('isAuthUser',$devamTakip)
+                                <a href="{{route('kullanici.index',['ara' => $devamTakip->user->name])}}">{{$devamTakip->user->name}}</a>
+                            @else
+                                {{$devamTakip->user->name}}
+                            @endcan
+                        </p>
                     </div>
                 </div>
                 <div class="col">

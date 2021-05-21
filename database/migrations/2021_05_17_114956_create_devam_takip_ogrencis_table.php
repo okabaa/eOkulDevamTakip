@@ -15,7 +15,7 @@ class CreateDevamTakipOgrencisTable extends Migration
     {
         Schema::create('devam_takip_ogrencis', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('devam_takip_id')->constrained();
+            $table->foreignId('devam_takip_id')->constrained()->onDelete('cascade');
             $table->foreignId('ogrenci_id')->constrained();
             $table->boolean('devam')->comment('Devamsızlık');
             $table->timestamps();

@@ -7,6 +7,7 @@ use App\Models\DevamTakipOgrenci;
 use App\Models\Ogrenci;
 use App\Models\Sinif;
 use Illuminate\Database\Seeder;
+use Illuminate\Foundation\Auth\User;
 
 class DevamTakipSeeder extends Seeder
 {
@@ -17,23 +18,24 @@ class DevamTakipSeeder extends Seeder
      */
     public function run()
     {
-        $k=0;
-        for ($i = 1; $i <= 20; $i++) {
-            for ($j = 1; $j <= 5; $j++) {
-                $k++;
-                DevamTakip::factory(1)->create([
-                    'user_id' => $i,
-                    'sinif_id' => $i
+        $sinifCount = Sinif::all()->count();
+        $userCount = User::all()->count();
+        for ($i = 1; $i <= 1000; $i++) {
+            $user = rand(1, $userCount);
+            $sinif = rand(1, $sinifCount);
+            DevamTakip::factory(1)->create([
+                'user_id' => $user,
+                'sinif_id' => $sinif
+            ]);
+            $ogrenciler = Ogrenci::where('sinif_id', $sinif)->get();
+            foreach ($ogrenciler as $ogrenci) {
+                DevamTakipOgrenci::create([
+                    'devam_takip_id' => $i,
+                    'ogrenci_id' => $ogrenci->id,
+                    'devam' => rand(0, 1)
                 ]);
-                $ogrenciler = Ogrenci::where('sinif_id', $i)->get();
-                foreach ($ogrenciler as $ogrenci) {
-                    DevamTakipOgrenci::create([
-                        'devam_takip_id' => $k,
-                        'ogrenci_id' => $ogrenci->id,
-                        'devam' => rand(0, 1)
-                    ]);
-                }
             }
+
         }
     }
 }

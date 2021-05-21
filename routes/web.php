@@ -13,13 +13,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [\App\Http\Controllers\MainController::class, 'welcome']);
 
-Route::middleware(['auth', 'verified'])->get('/panel', function () {
-    return view('dashboard');
-})->name('dashboard');
+Route::middleware(['auth', 'verified'])->get('/panel', [\App\Http\Controllers\MainController::class, 'index'])->name('dashboard');
 
 Route::namespace('\App\Http\Controllers')
     ->group(function () {
@@ -34,11 +30,12 @@ Route::namespace('\App\Http\Controllers')
             ]);
         });
         Route::middleware(['auth', 'isTeacher'])->group(function () {
+            Route::get('devamtakip/{id}', [\App\Http\Controllers\DevamTakipController::class, 'destroy'])->whereNumber('id')->name('devamtakip.destroy');
             Route::resource('sinif', SinifController::class)->only(['index']);
             Route::resource('ogrenci', OgrenciController::class)->only(['index']);
             Route::resources([
                 'devamtakip' => DevamTakipController::class,
             ]);
-            Route::resource('devamtakipliste', DevamTakipOgrenciController::class)->only(['show','edit']);
+            Route::resource('devamtakipliste', DevamTakipOgrenciController::class)->only(['show', 'edit']);
         });
     });
